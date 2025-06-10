@@ -17,8 +17,10 @@ import { Button } from "@/components/ui/button";
 import { Zap } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { BACKEND_ENDPOINT } from "@/lib/constants/endpoints";
+import { useCVAnalysisStore } from "../_lib/store";
 
 const CVAnalysisForm = () => {
+  const { setAnalysis } = useCVAnalysisStore();
   const form = useForm<CVAnalysisSchemaType>({
     resolver: zodResolver(CVAnalysisSchema),
   });
@@ -34,8 +36,8 @@ const CVAnalysisForm = () => {
         method: "POST",
         body: formData,
       });
-      const result = await response.json();
-      console.log(result);
+      const { data } = await response.json();
+      setAnalysis(data);
     } catch (error) {
       console.error(error);
     }

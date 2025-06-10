@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import CVAnalysisForm from "./_components/cv-analysis-form";
+import CVAnalysisWrapper from "./_components/analysis-wrapper";
 
 export default async function Page() {
   return (
-    <div className="flex flex-col justify-center min-h-screen">
+    <div className="flex flex-col justify-center gap-32 min-h-screen pb-40">
       <div className="flex items-start justify-center gap-28">
         <Image
           src={"/assets/business-man.svg"}
@@ -22,6 +23,8 @@ export default async function Page() {
           <CVAnalysisForm />
         </div>
       </div>
+
+      <CVAnalysisWrapper />
     </div>
   );
 }
