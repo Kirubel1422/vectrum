@@ -27,7 +27,9 @@ export const AnalyzeServices = {
     }
 
     // Parse contents of CV
-    const parsedCVContent = cvContentParser(fileType, fileBuffer);
+    const parsedCVContent = await cvContentParser(fileType, fileBuffer);
+
+    if (!parsedCVContent) throw new Error("Parsing CV content failed");
 
     // Prepare Content
     const content = JSON.stringify({
