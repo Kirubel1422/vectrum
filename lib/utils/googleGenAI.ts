@@ -5,8 +5,8 @@ import PROMPTS from "@/lib/constants/prompts";
 // const DEFAULT_MODEL = "google/gemini-2.5-flash-preview-05-20";
 // const DEFAULT_MODEL = "gemini-1.5-flash-latest"; // 6
 // const DEFAULT_MODEL = "gemini-2.0-flash-001"; // 5
-// const DEFAULT_MODEL = "gemini-2.0-flash-lite-001"; // 7 - GREAT PF
-const DEFAULT_MODEL = "gemini-2.0-flash"; // 10 - Best
+const DEFAULT_MODEL = "gemini-2.0-flash-lite-001"; // 7 - GREAT PF
+// const DEFAULT_MODEL = "gemini-2.0-flash"; // 10 - Best
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 export const googleGenAI = async (
