@@ -1,0 +1,2 @@
+ALTER TABLE "resumes" ALTER COLUMN "id" SET DEFAULT 'c347c101-ed48-4150-b8ce-5b0c017b1cde';--> statement-breakpoint
+ALTER TABLE "users" ALTER COLUMN "id" SET DEFAULT 'cc631f8d-fb2e-413e-8525-da7c16deb7b6';
