@@ -5,8 +5,8 @@ export class ApiSuccess {
 
   constructor(
     data: any = {},
-    timestamp: string = new Date().toISOString(),
-    status: number = 200
+    status: number = 200,
+    timestamp: string = new Date().toISOString()
   ) {
     this.data = data;
     this.timestamp = timestamp;
@@ -21,15 +21,15 @@ export class ApiError extends Error {
   public status: number;
 
   constructor(
-    status: number = 400,
-    timestamp: string = new Date().toISOString(),
     data: any = {},
-    message: string
+    status: number = 400,
+    message: string,
+    timestamp: string = new Date().toISOString()
   ) {
     super(message);
     this.timestamp = timestamp;
     this.message = message;
     this.status = status;
-    this.data = this.stack;
+    this.data = data || this.stack;
   }
 }
