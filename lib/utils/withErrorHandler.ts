@@ -6,7 +6,7 @@ export function withErrorHandler(handler: (req: Request) => Promise<Response>) {
   return async (req: Request) => {
     try {
       return await handler(req);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof AuthApiError) {
         switch (error.code) {
           case "invalid_credentials":
@@ -22,7 +22,11 @@ export function withErrorHandler(handler: (req: Request) => Promise<Response>) {
         }
       }
 
-      console.log(error);
+      if (error.message === "Bad credentials") {
+        return NextResponse.json(new ApiError({}, 400, "Invalid credentials"), {
+          status: 400,
+        });
+      }
 
       return NextResponse.json({
         message: "Internal Server Error",
