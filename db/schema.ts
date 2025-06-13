@@ -3,8 +3,14 @@ import crypto from "node:crypto";
 
 export const ROLES = pgEnum("roles", ["user", "admin"]);
 
+export const authUsers = pgTable("auth.users", {
+  id: uuid().primaryKey(),
+});
+
 export const usersTable = pgTable("users", {
-  id: uuid().defaultRandom().primaryKey(),
+  id: uuid()
+    .primaryKey()
+    .references(() => authUsers.id, { onDelete: "cascade" }),
   first_name: varchar({ length: 255 }).notNull(),
   last_name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),

@@ -1,0 +1,1 @@
+ALTER TABLE "resumes" ALTER COLUMN "id" SET DEFAULT 'fa0f6c7e-e090-40c8-b9f0-d42b14c85ce2';
