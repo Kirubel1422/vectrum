@@ -18,18 +18,45 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Loader } from "lucide-react";
 import { BACKEND_ENDPOINT } from "@/lib/constants";
+import { toast } from "sonner";
+import { useUserStore } from "../_lib/store";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
+  const { setUser } = useUserStore();
+  const router = useRouter();
+
   const form = useForm<TSignUpSchema>({
     resolver: zodResolver(SignUpSchema),
   });
 
   const submit = async (data: TSignUpSchema) => {
-    fetch(`${BACKEND_ENDPOINT}auth/signup`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    });
+    try {
+      const response = await fetch(`${BACKEND_ENDPOINT}auth/signup`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw Error(errorData.message || "Signup failed");
+      }
+
+      toast.success("Succesfully signed up!");
+
+      const userData = (await response.json()).data;
+
+      setUser(userData);
+
+      router.push("/");
+    } catch (error) {
+      if (error instanceof Error) {
+        return toast.error(error.message);
+      }
+
+      toast.error("Something went wrong please try again later.");
+    }
   };
 
   return (

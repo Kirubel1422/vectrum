@@ -1,7 +1,5 @@
+import { PASSWORD_TEST_REGEX } from "@/lib/constants";
 import { z } from "zod";
-
-const PASSWORD_TEST_REGEX =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
 export const SignInSchema = z.object({
   email: z.string().email("Invalid email address"),
