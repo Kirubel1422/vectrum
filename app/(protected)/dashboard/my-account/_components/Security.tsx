@@ -22,7 +22,7 @@ const Security = ({
   handleChangePassword: (
     current_password: string,
     new_password: string
-  ) => Promise<boolean>;
+  ) => Promise<{ success: boolean; message: string; signOut: boolean }>;
 }) => {
   const form = useForm<SecuritySchemaType>({
     resolver: zodResolver(SecuritySchema),
@@ -33,14 +33,20 @@ const Security = ({
       data.current_password,
       data.new_password
     );
-    if (result) {
-      toast.success(`Successfully changed your password!`);
+    if (result.signOut) {
+      console.log("Should sign out the user now");
+    }
+
+    if (result.success) {
+      toast.success(result.message || `Successfully changed your password!`);
+    } else {
+      toast.error(result.message || "Failed to change your password!");
     }
   };
 
   return (
     <Form {...form}>
-      <h2 className="text-2xl font-semibold text-secondary-500 mb-6">
+      <h2 className="text-2xl dark:text-text-100 font-semibold text-secondary-500 mb-6">
         Security
       </h2>
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
@@ -49,7 +55,9 @@ const Security = ({
           name="current_password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Current Password</FormLabel>
+              <FormLabel className="dark:text-text-100">
+                Current Password
+              </FormLabel>
 
               <FormControl>
                 <Input
@@ -69,7 +77,7 @@ const Security = ({
           name="new_password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel className="dark:text-text-100">New Password</FormLabel>
 
               <FormControl>
                 <Input
@@ -89,7 +97,9 @@ const Security = ({
           name="confirm_new_password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel className="dark:text-text-100">
+                Confirm Password
+              </FormLabel>
 
               <FormControl>
                 <Input
