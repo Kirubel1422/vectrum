@@ -24,7 +24,7 @@ export const AuthService = {
     return {
       user,
       jwt: JwtService.generate(
-        user.id as string,
+        user.id,
         user.first_name,
         user.last_name,
         user.email,
@@ -33,17 +33,23 @@ export const AuthService = {
       ),
     };
   },
+
   async signup(authData: SignUpRequest) {
     const hashedPassword = await this.hashPassword(authData.password);
 
     const { data, error } = await supabase.auth.admin.createUser({
       email: authData.email,
       password: hashedPassword,
+      user_metadata: {
+        role: "user",
+        displayName: authData.first_name + " " + authData.last_name,
+      },
     });
 
     if (error) throw error;
 
     const dbResponse = await UserService.saveUser({
+      id: data.user.id,
       email: authData.email,
       first_name: authData.first_name,
       last_name: authData.last_name,
@@ -55,7 +61,7 @@ export const AuthService = {
     delete user.password;
 
     const jwt = JwtService.generate(
-      data.user.id,
+      user.id,
       user.first_name,
       user.last_name,
       user.email,
@@ -69,31 +75,80 @@ export const AuthService = {
     };
   },
 
+  async refreshToken(userId: string) {
+    const [user] = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.id, userId));
+
+    return JwtService.generate(
+      user.id,
+      user.first_name,
+      user.last_name,
+      user.email,
+      user.role,
+      user.created_at as Date
+    );
+  },
+
   async changePassword(
     email: string,
     current_password: string,
-    new_password: string
-  ): Promise<boolean> {
-    const hashedPassword = await this.hashPassword(current_password);
-    const { isMatch, user } = await this.match(email, hashedPassword);
+    new_password: string,
+    userId: string
+  ): Promise<{ success: boolean; message: string; signOut: boolean }> {
+    if (!email || !current_password || !new_password)
+      return {
+        message: "All fields are required",
+        success: false,
+        signOut: false,
+      };
 
-    if (!isMatch) throw Error("Bad credentials");
+    const result = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email));
+
+    if (result.length === 0)
+      return { success: false, message: "User not found", signOut: true };
+
+    // Compare plain password with the saved password
+    const [user] = result;
+    const match = await bcrypt.compare(current_password, user.password);
+
+    if (!match)
+      return {
+        success: false,
+        message: "Invalid credentials.",
+        signOut: false,
+      };
 
     const newHashedPassword = await this.hashPassword(new_password);
-    const { error } = await supabase.auth.admin.updateUserById(
-      user.id as string,
+
+    const { error: updateUserError } = await supabase.auth.admin.updateUserById(
+      userId,
       {
         password: newHashedPassword,
       }
     );
 
-    if (error) throw error;
+    if (updateUserError)
+      return {
+        success: false,
+        message: updateUserError.message,
+        signOut: false,
+      };
 
-    db.update(usersTable)
+    await db
+      .update(usersTable)
       .set({ password: newHashedPassword })
-      .where(eq(usersTable.id, user.id as string));
+      .where(eq(usersTable.id, user.id));
 
-    return true;
+    return {
+      success: true,
+      message: "Successfully changed your password!",
+      signOut: false,
+    };
   },
 
   async hashPassword(plainPassword: string): Promise<string> {
