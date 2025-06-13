@@ -2,7 +2,9 @@ import { AuthApiError } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import { ApiError } from "../handlers/response.handler";
 
-export function withErrorHandler(handler: (req: Request) => Promise<Response>) {
+export function withErrorHandler(
+  handler: (req?: Request) => Promise<Response>
+) {
   return async (req: Request) => {
     try {
       return await handler(req);
