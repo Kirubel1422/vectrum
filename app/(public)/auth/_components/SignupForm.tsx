@@ -49,7 +49,7 @@ const SignUpForm = () => {
 
       setUser(userData);
 
-      router.push("/");
+      router.push("/dashboard/analyze-resume");
     } catch (error) {
       if (error instanceof Error) {
         return toast.error(error.message);
@@ -65,8 +65,6 @@ const SignUpForm = () => {
         onSubmit={form.handleSubmit(submit)}
         className="dark:border-card-border/30 md:w-3/4 w-full border-card-border flex flex-col items-center border rounded-2xl md:px-16 px-8 md:py-10 py-5"
       >
-        {/* PLACEHOLDER FOR LOGO  */}
-        <div className="rounded-full w-32 aspect-square mb-5 bg-border" />
         <h1 className=" text-4xl text-text-700 dark:text-text-100 font-medium mb-9">
           Signup
         </h1>
@@ -76,7 +74,7 @@ const SignUpForm = () => {
         </FormDescription>
 
         <div className="space-y-6 w-full">
-          <div className="space-x-2 flex items-start">
+          <div className="space-x-2 sm:grid sm:grid-cols-2  space-y-6 sm:space-y-0">
             <FormField
               control={form.control}
               name="first_name"
@@ -86,10 +84,10 @@ const SignUpForm = () => {
 
                   <FormControl>
                     <Input
-                      defaultValue={""}
                       className="w-full"
                       placeholder="First Name"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
 
@@ -107,10 +105,10 @@ const SignUpForm = () => {
 
                   <FormControl>
                     <Input
-                      defaultValue={""}
                       className="w-full"
                       placeholder="Last Name"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
 
@@ -129,10 +127,10 @@ const SignUpForm = () => {
 
                 <FormControl>
                   <Input
-                    defaultValue={""}
                     className="w-full"
                     placeholder="Email"
                     {...field}
+                    value={field.value ?? ""}
                   />
                 </FormControl>
 
@@ -150,11 +148,11 @@ const SignUpForm = () => {
 
                 <FormControl>
                   <Input
-                    defaultValue={""}
                     className="w-full"
                     placeholder="Password"
                     {...field}
                     type="password"
+                    value={field.value ?? ""}
                   />
                 </FormControl>
 
@@ -172,11 +170,11 @@ const SignUpForm = () => {
 
                 <FormControl>
                   <Input
-                    defaultValue={""}
                     className="w-full"
                     placeholder="Confirm Password"
                     {...field}
                     type="password"
+                    value={field.value ?? ""}
                   />
                 </FormControl>
 
@@ -204,6 +202,7 @@ const SignUpForm = () => {
         <hr className="my-6 h-px w-full bg-card-border " />
 
         <Button
+          disabled
           variant={"default"}
           className="text-text-500 dark:text-text-500 border-card-border border  bg-white/90 w-full mb-4 hover:bg-white/90 dark:bg-white/80 dark:hover:bg-white/80"
         >
@@ -218,7 +217,7 @@ const SignUpForm = () => {
 
         <p className="dark:text-text-100 text-text-500 text-sm">
           Already have an account?{" "}
-          <Link href="/auth/sigin" className="text-primary">
+          <Link href="/auth/signin" className="text-primary">
             Signin.
           </Link>
         </p>

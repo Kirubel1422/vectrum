@@ -49,7 +49,7 @@ const SigninForm = () => {
 
       setUser((await response.json()).data);
 
-      router.push("/");
+      router.push("/dashboard/analyze-resume");
     } catch (error) {
       if (error instanceof Error) {
         return toast.error(error.message);
@@ -65,8 +65,6 @@ const SigninForm = () => {
         onSubmit={form.handleSubmit(submit)}
         className="dark:border-card-border/30 md:w-3/4 w-full border-card-border flex flex-col items-center border rounded-2xl md:px-16 px-8 md:py-10 py-5"
       >
-        {/* PLACEHOLDER FOR LOGO  */}
-        <div className="rounded-full w-32 aspect-square mb-5 bg-border" />
         <h1 className=" text-4xl text-text-700 dark:text-text-100 font-medium mb-9">
           Signin
         </h1>
@@ -85,10 +83,10 @@ const SigninForm = () => {
 
                 <FormControl>
                   <Input
-                    defaultValue={""}
                     className="w-full"
                     placeholder="Email"
                     {...field}
+                    value={field.value ?? ""}
                   />
                 </FormControl>
 
@@ -106,11 +104,11 @@ const SigninForm = () => {
 
                 <FormControl>
                   <Input
-                    defaultValue={""}
                     className="w-full"
                     placeholder="Password"
                     type="password"
                     {...field}
+                    value={field.value ?? ""}
                   />
                 </FormControl>
 
@@ -144,6 +142,7 @@ const SigninForm = () => {
         <hr className="my-6 h-px w-full bg-card-border " />
 
         <Button
+          disabled
           variant={"default"}
           className="text-text-500 dark:text-text-500 border-card-border border  bg-white/90 w-full mb-4 hover:bg-white/90 dark:bg-white/80 dark:hover:bg-white/80"
         >
