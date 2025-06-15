@@ -35,14 +35,10 @@ const AccountInfoCard = ({
       label: "Member Since",
       value: created_at,
     },
-    {
-      label: "Last Login",
-      value: "asfasf",
-    },
   ];
 
   return (
-    <Card className="dark:bg-dark-mode md:w-3/4">
+    <Card className="dark:bg-dark-mode md:w-3/4 shrink-0">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-secondary-500 dark:text-text-100 ">
           Account Information

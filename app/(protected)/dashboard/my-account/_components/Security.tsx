@@ -62,6 +62,7 @@ const Security = ({
               <FormControl>
                 <Input
                   {...field}
+                  value={field.value ?? ""}
                   type="password"
                   placeholder="Enter your current password"
                 />
@@ -82,6 +83,7 @@ const Security = ({
               <FormControl>
                 <Input
                   {...field}
+                  value={field.value ?? ""}
                   type="password"
                   placeholder="Enter your new password"
                 />
@@ -104,6 +106,7 @@ const Security = ({
               <FormControl>
                 <Input
                   {...field}
+                  value={field.value ?? ""}
                   type="password"
                   placeholder="Confirm new password"
                 />
@@ -116,7 +119,7 @@ const Security = ({
 
         <Button
           disabled={form.formState.isSubmitting}
-          variant={"secondary"}
+          variant={"default"}
           className="mt-3"
           type="submit"
         >

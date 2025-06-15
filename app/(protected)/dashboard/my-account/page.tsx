@@ -63,8 +63,8 @@ export default async function page() {
   };
 
   return (
-    <div className="flex-1 grid md:grid-cols-12 gap-10 md:px-12 dark:bg-dark-mode min-h-screen">
-      <div className="md:col-span-6">
+    <div className="grid grid-cols-12 md:pt-0 pt-12  place-items-center gap-10 md:gap-2 dark:bg-dark-mode min-h-screen">
+      <div className="w-full md:col-start-3 col-start-2 md:col-span-4 col-span-10">
         <General
           first_name={jwtData.first_name}
           last_name={jwtData.last_name}
@@ -74,7 +74,7 @@ export default async function page() {
         <Security handleChangePassword={handleChangePassword} />
       </div>
 
-      <div className="md:col-span-6">
+      <div className="w-full md:z-0 -z-50 md:col-start-8 col-start-2 col-span-10 md:col-span-full place-self-center">
         <AccountInfoCard
           handleLogout={handleLogout}
           name={jwtData.first_name + " " + jwtData.last_name}

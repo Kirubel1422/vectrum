@@ -62,6 +62,7 @@ const General = ({
                 <Input
                   {...field}
                   type="text"
+                  value={field.value ?? undefined}
                   placeholder="Enter your first name"
                 />
               </FormControl>
@@ -82,6 +83,7 @@ const General = ({
                 <Input
                   {...field}
                   type="text"
+                  value={field.value ?? undefined}
                   placeholder="Enter your last name"
                 />
               </FormControl>
@@ -91,7 +93,7 @@ const General = ({
           )}
         />
 
-        <Button variant={"secondary"} className="mt-3" type="submit">
+        <Button variant={"default"} className="mt-3" type="submit">
           {form.formState.isSubmitting ? (
             <span className="flex items-center gap-2">
               <Loader className="animate-spin" /> Save
