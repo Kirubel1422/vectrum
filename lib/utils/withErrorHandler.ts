@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { ApiError } from "../handlers/response.handler";
 
 export function withErrorHandler(
-  handler: (req?: Request) => Promise<Response>
+  handler: (req: Request) => Promise<Response> | Promise<void>
 ) {
   return async (req: Request) => {
     try {
@@ -30,9 +30,16 @@ export function withErrorHandler(
         });
       }
 
-      return NextResponse.json({
-        message: "Internal Server Error",
-      });
+      console.log(error);
+
+      return NextResponse.json(
+        {
+          message: "Internal Server Error",
+        },
+        {
+          status: 500,
+        }
+      );
     }
   };
 }

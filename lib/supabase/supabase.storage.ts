@@ -24,3 +24,10 @@ export const storage = {
     };
   },
 };
+
+export const retrieve = (supabaseCVUrl: string, bucket: string) => {
+  const { data: publicFilePath } = supabase.storage
+    .from(bucket)
+    .getPublicUrl(supabaseCVUrl);
+  return publicFilePath.publicUrl;
+};
