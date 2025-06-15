@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vectrum
 
-## Getting Started
+**Instantly optimize your resume for any job application with the power of AI.**
 
-First, run the development server:
+This tool acts as your personal career assistant, analyzing your resume against a specific job description to give you a competitive edge. It takes the guesswork out of job applications by providing concrete, data-driven feedback to help you land your dream job.
+
+Powered by Google's state-of-the-art **Gemini** model, it goes beyond simple keyword matching to understand context, identify skill gaps, and suggest compelling improvements.
+
+## Key Features
+
+-   🎯 **Instant Match Score:** Get a percentage score that quantifies how well your resume aligns with the job description.
+-   🧠 **Skill Gap Analysis:** Immediately see which required skills and qualifications are missing from your resume.
+-   ✍️ **Smart Rewrite Suggestions:** Receive AI-generated suggestions to rephrase bullet points and better highlight your experience for the specific role.
+-   🔧 **Adjustable Model:** Easily configure the tool to use different versions of the Gemini model to suit your needs.
+
+## ⚙️ Getting Started
+
+Follow these steps to set up and run the project on your local machine.
+
+### Prerequisites
+
+-   [Node.js](https://nodejs.org/) (version 18.x or later recommended)
+-   [pnpm](https://pnpm.io/), [yarn](https://yarnpkg.com/) as your package manager.
+-   A **Google Gemini API Key**. You can get one for free from [Google AI Studio](https://makersuite.google.com/app/apikey).
+
+### 1. Clone the Repository
+
+First, clone the project to your local machine:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Kirubel1422/vectrum.git
+cd vectrum
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Install the necessary project dependencies using your preferred package manager:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Using pnpm
+pnpm install
+```
 
-## Learn More
+### 3. Set Up Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+This step is crucial for the application to connect to the Google Gemini API.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  Create a new file named `.env` in the root of the project directory.
+2.  Copy the contents of the `.env.example` file into your new `.env.local` file.
+3.  Replace the necessary values from `.env`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Run the Development Server
 
-## Deploy on Vercel
+Now you are ready to start the application!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Using pnpm
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to see the application running.
