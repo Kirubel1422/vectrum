@@ -7,7 +7,7 @@ import { withErrorHandler } from "@/lib/utils/withErrorHandler";
 import { NextResponse } from "next/server";
 
 export const POST = withErrorHandler(async (req) => {
-  const data = RequestBodyParser(SignInSchema, await req.json());
+  const data = RequestBodyParser(SignInSchema, await req?.json());
   const { jwt, user } = await AuthService.signin(data);
 
   const response = NextResponse.json(new ApiSuccess(user));
