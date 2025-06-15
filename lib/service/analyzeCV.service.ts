@@ -1,5 +1,5 @@
 import { BUCKET_NAME } from "../constants";
-import { storage } from "../supabase/supabase.storage";
+import { storage, retrieve } from "../supabase/supabase.storage";
 import path from "path";
 import { cvContentParser } from "../utils/index";
 import { googleGenAI } from "../utils/index";
@@ -8,13 +8,13 @@ export const AnalyzeServices = {
   async analyze(
     jobDescription: string,
     cv: File
-  ): Promise<Record<string, string> | undefined> {
+  ): Promise<{ content: string; resumePath: string }> {
     // Upload CV to supabase
     const fileName = `${new Date().toISOString()}-${cv.name}`;
     const fileType = path.extname(cv.name);
     const fileBuffer = Buffer.from(await cv.arrayBuffer());
 
-    const { error, path: uploadedFilePath } = await storage.upload({
+    const { error, path: supabaseCVPath } = await storage.upload({
       bucketName: BUCKET_NAME,
       fileBuffer,
       fileType,
@@ -40,7 +40,10 @@ export const AnalyzeServices = {
     const response = await googleGenAI(content);
 
     if (response != undefined) {
-      return JSON.parse(response);
+      return {
+        content: JSON.parse(response),
+        resumePath: retrieve(supabaseCVPath as string, BUCKET_NAME),
+      };
     }
 
     throw Error("Failed to generate analysis");
